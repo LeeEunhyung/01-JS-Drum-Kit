@@ -6,8 +6,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-
   <div class="keys">
     <div data-key="65" class="key">
       <kbd>A</kbd>
@@ -56,10 +54,26 @@
   <audio data-key="74" src="sounds/snare.wav"></audio>
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
+`
+  <script>
+    //키보드 클릭 이벤트
+    document.addEventListener("keydown", (e) => {
+      const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); //알맞은 audio를 재생시키기 위함
+      const key = document.querySelector(`div[data-key="${e.keyCode}"]`); //key 요소에 css 적용하기 위함
+      if (!audio) return; //audio 요소가 없을 경우 리턴
+      
+      key.classList.add('playing'); //class 속성에 playing 추가 시, css 변경
+      audio.play(); //audio 음악 재생
+      audio.currentTime = 0; //audio 음악을 정지하고 처음 위치로 돌아가고 싶은 경우 currentTime 속성을 0으로 변경
+    });
 
-<script>
-
-</script>
+    //css 변경이 끝난 후 실행되는 이벤트
+    document.addEventListener("transitionend", (e) => { 
+      if (e.target.classList.contains('playing')) { //class 속성에 playing이 있는 경우
+        e.target.classList.remove('playing'); //class 속성에 playing 삭제 시, css 변경
+      }
+    })
+  </script>
 
 
 </body>
